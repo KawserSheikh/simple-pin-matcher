@@ -50,9 +50,8 @@ submitBtn.addEventListener('click', function () {
     const keypadNumber = keypadInputBox.value;
     const pinGenerateNumber = pinGenerateInputBox.value;
 
-    if (pinGenerateNumber == '' || keypadNumber == '') {
-        wrong.style.display = 'block';
-        setTimeOut(wrong);
+    if (pinGenerateNumber == '' && keypadNumber == '') {
+        alert('Please Generate Pin Number');
     }
     else if (keypadNumber === pinGenerateNumber) {
         success.style.display = 'block';
@@ -62,15 +61,17 @@ submitBtn.addEventListener('click', function () {
         wrongCount += 1;
         wrong.style.display = 'block';
         setTimeOut(wrong);
-    }
 
-    if (keypadNumber !== pinGenerateNumber && LeftCount > 1) {
-        LeftCount--;
-        leftNumber.innerText = LeftCount;
-        console.log(LeftCount);
-    } else {
-        document.querySelector('.action-left').style.display = 'none';
-        submitBtn.disabled = true;
+        /// how many left checker
+        if (keypadNumber !== pinGenerateNumber && LeftCount > 1) {
+            LeftCount--;
+            leftNumber.innerText = LeftCount;
+            console.log(LeftCount);
+        }
+        else {
+            document.querySelector('.action-left').style.display = 'none';
+            submitBtn.disabled = true;
+        }
     }
     keypadInputBox.value = '';
     pinGenerateInputBox.value = '';
