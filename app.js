@@ -5,6 +5,7 @@ const pinGenerateInputBox = document.getElementById('pin-generate-input');
 const allKeypadBtn = document.querySelector('.calc-body');
 const keypadInputBox = document.getElementById('keypadInputBox');
 
+
 // Pin generate button event handler
 pinGenerateBtn.addEventListener('click', function () {
     const randomNumber = Math.floor(Math.random() * 9000 + 1000)
@@ -41,9 +42,13 @@ const submitBtn = document.getElementById('submit-btn');
 const success = document.querySelector('.success');
 const wrong = document.querySelector('.wrong');
 
+const leftNumber = document.getElementById('left-count');
+let LeftCount = parseInt(leftNumber.innerText);
+let wrongCount = 0;
+
 submitBtn.addEventListener('click', function () {
-    let keypadNumber = keypadInputBox.value;
-    let pinGenerateNumber = pinGenerateInputBox.value;
+    const keypadNumber = keypadInputBox.value;
+    const pinGenerateNumber = pinGenerateInputBox.value;
 
     if (pinGenerateNumber == '' || keypadNumber == '') {
         wrong.style.display = 'block';
@@ -54,12 +59,25 @@ submitBtn.addEventListener('click', function () {
         setTimeOut(success);
     }
     else {
+        wrongCount += 1;
         wrong.style.display = 'block';
         setTimeOut(wrong);
     }
-    keypadNumber = '';
+
+    if (keypadNumber !== pinGenerateNumber && LeftCount > 1) {
+        LeftCount--;
+        leftNumber.innerText = LeftCount;
+        console.log(LeftCount);
+    } else {
+        document.querySelector('.action-left').style.display = 'none';
+        submitBtn.disabled = true;
+    }
+    keypadInputBox.value = '';
+    pinGenerateInputBox.value = '';
 });
 
+
+///  hide error or sucess message function
 function setTimeOut(idName) {
     setTimeout(function () {
         idName.style.display = 'none';
